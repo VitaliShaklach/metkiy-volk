@@ -94,11 +94,10 @@ export class MapScene {
     for (const [x, y, r] of ISLAND) disc(c, x, y, r, PAL.G);
     for (const [x, y, r] of ISLAND) disc(c, x - r / 3, y - r / 3, r / 3, PAL.L);
 
-    // routes between missions
-    const route = ['comm', 'jungle', 'camp', 'powder', 'village', 'airport'];
-    for (let i = 0; i < route.length - 1; i++) {
-      const [x0, y0] = missionById(route[i]).map;
-      const [x1, y1] = missionById(route[i + 1]).map;
+    // route between missions in number order 1-2-3-4-5-6
+    for (let i = 0; i < MISSIONS.length - 1; i++) {
+      const [x0, y0] = MISSIONS[i].map;
+      const [x1, y1] = MISSIONS[i + 1].map;
       const n = Math.hypot(x1 - x0, y1 - y0) / 4;
       for (let k = 0; k < n; k += 2) rect(c, x0 + ((x1 - x0) * k) / n, y0 + ((y1 - y0) * k) / n, 2, 2, PAL.d);
     }
