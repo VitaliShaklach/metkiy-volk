@@ -10,11 +10,14 @@ import { playMusic, stopMusic, setMusicPaused } from '../music.js';
 import { t } from '../i18n.js';
 import { DIFF, settings, MAG_SIZE, MAX_ITEMS, DEBUG } from '../game.js';
 import { MISSIONS } from '../missions.js';
-import { ResultScene } from './result.js';
+import { ResultScene, updateHiscore } from './result.js';
+import { MapScene } from './map.js';
+import { TitleScene } from './title.js';
 
 const FIRE_RATE = 1 / 8;
 const MG_RATE = 1 / 16;
 const EMPTY_RATE = 0.6;
+const PAUSE_Y = 52; // top of the pause menu box
 const BULLET_DAMAGE = 3; // health lost per enemy bullet that hits (x difficulty)
 
 export class BattleScene {
@@ -77,8 +80,12 @@ export class BattleScene {
   update(dt) {
     const inp = this.game.input;
     const wasPaused = this.paused;
-    if (inp.pausePressed && (this.state === 'play' || this.state === 'intro')) this.paused = !this.paused;
-    else if (this.paused && (inp.tap || inp.confirm) && !this.game.rulesOpen) this.paused = false;
+    if (inp.pausePressed && (this.state === 'play' || this.state === 'intro')) {
+      this.paused = !this.paused;
+      this.pauseSel = 0;
+    } else if (this.paused && !this.game.rulesOpen && this.pauseMenu(inp)) {
+      return; // left the battle
+    }
     setMusicPaused(this.paused);
     if (this.paused || wasPaused !== this.paused) return; // the tap that resumes must not fire
 
@@ -130,6 +137,42 @@ export class BattleScene {
     this.actors = this.actors.filter((a) => !a.remove);
     this.missiles = this.missiles.filter((m) => !m.remove);
     this.fx = this.fx.filter((f) => !f.remove);
+  }
+
+  pauseItems() {
+    return [t('resume'), t('toMap'), t('toTitle')];
+  }
+
+  pauseItemAt(p) {
+    const i = Math.floor((p.y - (PAUSE_Y + 30)) / 16);
+    return p.x >= 24 && p.x <= W - 24 && i >= 0 && i < 3 ? i : -1;
+  }
+
+  // Pause menu: continue, back to the operation map, or main menu. Returns true if the battle was left.
+  pauseMenu(inp) {
+    if (inp.navUp) this.pauseSel = (this.pauseSel + 2) % 3;
+    if (inp.navDown) this.pauseSel = (this.pauseSel + 1) % 3;
+    if (!inp.isTouch) {
+      const hover = this.pauseItemAt(inp.aim);
+      if (hover >= 0) this.pauseSel = hover;
+    }
+    let act = -1;
+    if (inp.tap) {
+      act = this.pauseItemAt(inp.tap);
+      // a tap outside the menu box simply continues
+      if (act < 0 && (inp.tap.y < PAUSE_Y || inp.tap.y > PAUSE_Y + 86)) act = 0;
+    }
+    if (inp.confirm) act = this.pauseSel;
+    if (act < 0) return false;
+    sfx.menu();
+    if (act === 0) {
+      this.paused = false;
+      return false;
+    }
+    stopMusic();
+    updateHiscore(this.run.score);
+    this.game.setScene(act === 1 ? new MapScene(this.game) : new TitleScene(this.game));
+    return true;
   }
 
   count(Type, pred = () => true) {
@@ -459,9 +502,15 @@ export class BattleScene {
     }
 
     if (this.paused) {
-      rect(c, 0, 70, W, 44, PAL.K);
-      drawText(c, t('pause'), W / 2, 80, PAL.Y, { align: 'center', scale: 2 });
-      drawText(c, t('tapResume'), W / 2, 100, PAL.W, { align: 'center' });
+      rect(c, 24, PAUSE_Y, W - 48, 86, PAL.K);
+      rect(c, 24, PAUSE_Y, W - 48, 1, PAL.W);
+      rect(c, 24, PAUSE_Y + 85, W - 48, 1, PAL.W);
+      drawText(c, t('pause'), W / 2, PAUSE_Y + 8, PAL.Y, { align: 'center', scale: 2 });
+      this.pauseItems().forEach((label, i) => {
+        const y = PAUSE_Y + 34 + i * 16;
+        const on = i === this.pauseSel;
+        drawText(c, on ? `> ${label} <` : label, W / 2, y, on ? PAL.Y : PAL.W, { align: 'center' });
+      });
       return;
     }
 

@@ -35,11 +35,11 @@ const TEXT = {
 <table class="btns">
 <tr><td>👆</td><td><b>Коснись экрана</b> — выстрел точно в это место. Держи палец — стреляет очередью. Веди пальцем — прицел едет за ним.</td></tr>
 <tr><td>{btn:grenade}</td><td><b>Граната</b> (справа внизу, видна в бою). Нажми — кнопка замигает. Потом коснись места на экране — граната полетит туда. Нажми ещё раз — отмена. Если один палец уже стреляет, граната летит сразу в прицел.</td></tr>
-<tr><td>{btn:pause}</td><td><b>Пауза</b> (справа вверху, в бою). Чтобы продолжить — коснись экрана.</td></tr>
+<tr><td>{btn:pause}</td><td><b>Пауза</b> (справа вверху, в бою). Откроется меню: <b>Продолжить</b>, <b>Выйти на карту</b> (миссию можно начать заново) или <b>Главное меню</b>. На компьютере — клавиша <kbd>P</kbd> или <kbd>Esc</kbd>.</td></tr>
 <tr><td>{btn:rules}</td><td><b>Правила</b> — эта страница. Игра на это время встаёт на паузу.</td></tr>
 <tr><td>{btn:full}</td><td><b>Во весь экран</b> (слева вверху). На iPad её нет — вместо неё открой игру в Safari, нажми «Поделиться» → «На экран Домой» и запускай с иконки: будет без панелей браузера.</td></tr>
 </table>
-<p>Держи планшет <b>горизонтально</b> — так экран больше. Меню и карта миссий — тоже касанием: коснись миссии, потом «СТАРТ».</p>
+<p>Держи планшет <b>горизонтально</b> — так экран больше. Меню и карта миссий — тоже касанием: коснись миссии, потом «СТАРТ». С карты в главное меню — кнопка «&lt; МЕНЮ» слева вверху.</p>
 
 <h2>Панель внизу</h2>
 <ul>
@@ -106,11 +106,11 @@ const TEXT = {
 <table class="btns">
 <tr><td>👆</td><td><b>Touch the screen</b> to shoot exactly there. Keep your finger down for auto fire. Slide it and the aim follows.</td></tr>
 <tr><td>{btn:grenade}</td><td><b>Grenade</b> (bottom right, shown in battle). Press it and it starts blinking, then touch a spot — the grenade flies there. Press again to cancel. If another finger is already firing, the grenade goes straight to the aim.</td></tr>
-<tr><td>{btn:pause}</td><td><b>Pause</b> (top right, in battle). Touch the screen to continue.</td></tr>
+<tr><td>{btn:pause}</td><td><b>Pause</b> (top right, in battle). It opens a menu: <b>Continue</b>, <b>Back to map</b> (you can restart the mission) or <b>Main menu</b>. On a computer press <kbd>P</kbd> or <kbd>Esc</kbd>.</td></tr>
 <tr><td>{btn:rules}</td><td><b>Rules</b> — this page. The game pauses while it is open.</td></tr>
 <tr><td>{btn:full}</td><td><b>Full screen</b> (top left). iPad doesn't have it: open the game in Safari, tap Share → Add to Home Screen and start it from the icon — no browser bars.</td></tr>
 </table>
-<p>Hold the tablet <b>sideways</b> for a bigger picture. Menus and the mission map work by touch too: touch a mission, then START.</p>
+<p>Hold the tablet <b>sideways</b> for a bigger picture. Menus and the mission map work by touch too: touch a mission, then START. The «&lt; MENU» button at the top left of the map goes back to the main menu.</p>
 
 <h2>Bottom panel</h2>
 <ul>

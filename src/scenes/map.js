@@ -6,9 +6,11 @@ import { sfx } from '../audio.js';
 import { playMusic } from '../music.js';
 import { MISSIONS, missionById } from '../missions.js';
 import { BattleScene } from './battle.js';
+import { TitleScene } from './title.js';
 
 const PANEL_Y = 150;
 const BTN = { x: 88, y: 206, w: 80, h: 15 };
+const MENU_BTN = { x: 2, y: 1, w: 56, h: 12 }; // "< MENU" back to the title screen
 
 // Island outline made of overlapping blobs: [x, y, r]
 const ISLAND = [
@@ -56,8 +58,17 @@ export class MapScene {
     if (inp.navUp) this.sel = (this.sel + MISSIONS.length - 1) % MISSIONS.length;
     if (inp.navDown) this.sel = (this.sel + 1) % MISSIONS.length;
     if (inp.confirm) this.start();
+    if (inp.pausePressed) {
+      this.game.setScene(new TitleScene(this.game));
+      return;
+    }
     if (inp.tap) {
       const p = inp.tap;
+      if (p.x <= MENU_BTN.x + MENU_BTN.w && p.y <= MENU_BTN.y + MENU_BTN.h + 2) {
+        sfx.menu();
+        this.game.setScene(new TitleScene(this.game));
+        return;
+      }
       const i = this.markerAt(p);
       if (i >= 0) {
         if (i === this.sel && this.available(MISSIONS[i])) this.start();
@@ -113,6 +124,9 @@ export class MapScene {
     });
 
     drawText(c, t('mapTitle'), W / 2, 4, PAL.W, { align: 'center', shadow: PAL.K });
+    rect(c, MENU_BTN.x, MENU_BTN.y, MENU_BTN.w, MENU_BTN.h, PAL.K);
+    frameRect(c, MENU_BTN.x, MENU_BTN.y, MENU_BTN.w, MENU_BTN.h, PAL.W);
+    drawText(c, t('menuBtn'), MENU_BTN.x + MENU_BTN.w / 2, MENU_BTN.y + 2, PAL.Y, { align: 'center' });
 
     // info panel
     rect(c, 0, PANEL_Y, W, H - PANEL_Y, PAL.K);
