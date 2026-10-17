@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta name="theme-color" content="#000000">
+<title>Меткий волк</title>
+<link rel="manifest" href="manifest.json">
+<link rel="icon" type="image/png" href="icons/favicon.png">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=block" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<canvas id="screen" width="256" height="240"></canvas>
+
+<button id="btnGrenade" class="ui" aria-label="Grenade">
+  <svg viewBox="0 0 16 16" shape-rendering="crispEdges"><path fill="currentColor" d="M6 1h4v2h3v2h-1v-1h-2v1h1v1h1v1h1v6h-1v1h-1v1H5v-1H4v-1H3V7h1V6h1V5h1z"/></svg>
+</button>
+<button id="btnPause" class="ui" aria-label="Pause">
+  <svg viewBox="0 0 16 16" shape-rendering="crispEdges"><path fill="currentColor" d="M3 2h4v12H3zM9 2h4v12H9z"/></svg>
+</button>
+<button id="btnFull" class="ui" aria-label="Fullscreen">
+  <svg viewBox="0 0 16 16" shape-rendering="crispEdges"><path fill="currentColor" d="M1 1h5v2H3v3H1zM10 1h5v5h-2V3h-3zM1 10h2v3h3v2H1zM13 10h2v5h-5v-2h3z"/></svg>
+</button>
+<button id="btnRules" class="ui" aria-controls="rules"><span>?</span><span id="btnRulesLabel"></span></button>
+<aside id="rules" hidden>
+  <header>
+    <h1 id="rulesTitle"></h1>
+    <button id="rulesClose" aria-label="Close">✕</button>
+  </header>
+  <div id="rulesBody"></div>
+</aside>
+<div id="rotate"></div>
+
+<script type="module" src="src/main.js"></script>
+</body>
+</html>
